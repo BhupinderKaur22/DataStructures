@@ -75,6 +75,31 @@ class SinglyLinkedList {
         this.length++;
         return this;
     }
+
+    // Get the node value at a specific index
+    get(index) {
+        if (index < 0 || index >= this.length) {
+            return 'not found (Index out of bound)'
+        }
+        let counter = 0;
+        let node = this.head;
+        while(counter < index) {
+            node = node.next;
+            counter++;
+        }
+        return node;
+    }
+
+    // Set the index with newValue
+    set(index, newValue) {
+        const foundNode = this.get(index);
+        // if (typeof foundNode === 'object') {
+        if (foundNode.constructor === Node) {
+            foundNode.value = newValue;
+            return true
+        }
+        return false;
+    }
 }
 
 const list = new SinglyLinkedList();
@@ -97,3 +122,10 @@ list.push('All well?');
 
 // list.unshift('Hey!');
 // console.log('List after unshifting items: ', list);
+
+// const index = 0;
+// console.log(`Item at index ${index} in the list is:`, list.get(index));
+
+const index = 9;
+const newValue = ':)';
+console.log(`Update successful at index ${index}:`, list.set(index, newValue));
