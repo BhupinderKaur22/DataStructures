@@ -100,6 +100,25 @@ class SinglyLinkedList {
         }
         return false;
     }
+
+    // Insert the node at a specific index
+    insert(index, value) {
+        if (index < 0 || index > this.length) {
+            return false;
+        }
+        if (index === 0) {
+            this.unshift(value);
+        } else if (index === this.length) {
+            this.push(value);
+        } else {
+            const previousNode = this.get(index-1);
+            const newNode = new Node(value);
+            newNode.next = previousNode.next;
+            previousNode.next = newNode;
+            this.length++;
+        }
+        return true;
+    }
 }
 
 const list = new SinglyLinkedList();
@@ -126,6 +145,10 @@ list.push('All well?');
 // const index = 0;
 // console.log(`Item at index ${index} in the list is:`, list.get(index));
 
-const index = 9;
-const newValue = ':)';
-console.log(`Update successful at index ${index}:`, list.set(index, newValue));
+// const index = 9;
+// const newValue = ':)';
+// console.log(`Update successful at index ${index}:`, list.set(index, newValue));
+
+const index = -8;
+const value = '<3';
+console.log(`Insert successful at index ${index}:`, list.insert(index, value));
