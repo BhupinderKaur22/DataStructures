@@ -119,6 +119,24 @@ class SinglyLinkedList {
         }
         return true;
     }
+
+    // Remove a node from a specific index
+    remove(index) {
+        if (index < 0 || index >= this.length) {
+            return false;
+        }
+        if (index === 0) {
+            this.shift();
+        } else if (index === (this.length-1)) {
+            this.pop();
+        } else {
+            const previousNode = this.get(index-1);
+            const removed = previousNode.next;
+            previousNode.next = removed.next;
+            this.length--;
+        }
+        return true;
+    }
 }
 
 const list = new SinglyLinkedList();
@@ -149,6 +167,9 @@ list.push('All well?');
 // const newValue = ':)';
 // console.log(`Update successful at index ${index}:`, list.set(index, newValue));
 
-const index = -8;
-const value = '<3';
-console.log(`Insert successful at index ${index}:`, list.insert(index, value));
+// const index = -8;
+// const value = '<3';
+// console.log(`Insert successful at index ${index}:`, list.insert(index, value));
+
+const index = 2;
+console.log(`Remove successful at index ${index}:`, list.remove(index));
