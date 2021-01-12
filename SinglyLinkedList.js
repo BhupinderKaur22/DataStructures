@@ -100,6 +100,78 @@ class SinglyLinkedList {
         }
         return false;
     }
+
+    // Insert the node at a specific index
+    insert(index, value) {
+        if (index < 0 || index > this.length) {
+            return false;
+        }
+        if (index === 0) {
+            this.unshift(value);
+        } else if (index === this.length) {
+            this.push(value);
+        } else {
+            const previousNode = this.get(index-1);
+            const newNode = new Node(value);
+            newNode.next = previousNode.next;
+            previousNode.next = newNode;
+            this.length++;
+        }
+        return true;
+    }
+
+    // Remove a node from a specific index
+    remove(index) {
+        if (index < 0 || index >= this.length) {
+            return false;
+        }
+        if (index === 0) {
+            this.shift();
+        } else if (index === (this.length-1)) {
+            this.pop();
+        } else {
+            const previousNode = this.get(index-1);
+            const removed = previousNode.next;
+            previousNode.next = removed.next;
+            this.length--;
+        }
+        return true;
+    }
+
+    // Reverse the whole linked list
+    /** Example
+     * length = 5 -> 3
+     *                     31 -> 45 -> 67 -> 89 -> 90
+     *     counter = 0     c  <- n     nn 
+     *     counter = 1           c  <- n     nn
+     *     counter = 2                 c  <- n     nn
+     *     counter = 3                       c  <- n     nn
+     *     counter = 4                             c     n     nn (Condition unsatisfied, break loop) 
+     */
+    reverse() {
+        if (!this.head || this.head === this.tail) {
+            return false;
+        } 
+
+        let currentNode = this.head;
+        this.head = this.tail;
+        this.tail = currentNode;
+
+        let nextNode;
+        let previousNode = null;
+        let counter = 0;
+
+        while(counter < this.length) {
+            nextNode = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode;
+            counter++;
+        } counter++;
+
+        return true;
+    }
+   
 }
 
 const list = new SinglyLinkedList();
@@ -126,6 +198,15 @@ list.push('All well?');
 // const index = 0;
 // console.log(`Item at index ${index} in the list is:`, list.get(index));
 
-const index = 9;
-const newValue = ':)';
-console.log(`Update successful at index ${index}:`, list.set(index, newValue));
+// const index = 9;
+// const newValue = ':)';
+// console.log(`Update successful at index ${index}:`, list.set(index, newValue));
+
+// const index = -8;
+// const value = '<3';
+// console.log(`Insert successful at index ${index}:`, list.insert(index, value));
+
+// const index = 2;
+// console.log(`Remove successful at index ${index}:`, list.remove(index));
+
+console.log('List reverse successful:', list.reverse());
