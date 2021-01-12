@@ -137,6 +137,41 @@ class SinglyLinkedList {
         }
         return true;
     }
+
+    // Reverse the whole linked list
+    /** Example
+     * length = 5 -> 3
+     *                     31 -> 45 -> 67 -> 89 -> 90
+     *     counter = 0     c  <- n     nn 
+     *     counter = 1           c  <- n     nn
+     *     counter = 2                 c  <- n     nn
+     *     counter = 3                       c  <- n     nn
+     *     counter = 4                             c     n     nn (Condition unsatisfied, break loop) 
+     */
+    reverse() {
+        if (!this.head || this.head === this.tail) {
+            return false;
+        } 
+
+        let currentNode = this.head;
+        this.head = this.tail;
+        this.tail = currentNode;
+
+        let nextNode;
+        let previousNode = null;
+        let counter = 0;
+
+        while(counter < this.length) {
+            nextNode = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode;
+            counter++;
+        } counter++;
+
+        return true;
+    }
+   
 }
 
 const list = new SinglyLinkedList();
@@ -171,5 +206,7 @@ list.push('All well?');
 // const value = '<3';
 // console.log(`Insert successful at index ${index}:`, list.insert(index, value));
 
-const index = 2;
-console.log(`Remove successful at index ${index}:`, list.remove(index));
+// const index = 2;
+// console.log(`Remove successful at index ${index}:`, list.remove(index));
+
+console.log('List reverse successful:', list.reverse());
